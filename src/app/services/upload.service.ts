@@ -33,7 +33,7 @@ export interface DeleteResponse {
 })
 export class UploadService {
   // VOCÊ VAI COLOCAR A URL DO SEU API GATEWAY AQUI DEPOIS
-  private apiUrl = 'https://hleasylvvb.execute-api.us-east-2.amazonaws.com/prod';
+  private apiUrl = 'https://8ahtc9m51l.execute-api.us-east-1.amazonaws.com/prod';
   
   // Configurações
   private readonly maxFileSize = 10 * 1024 * 1024; // 10MB
