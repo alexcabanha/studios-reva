@@ -1,10 +1,29 @@
-.user-dashboard { min-height: 100vh; background-color: hsl(0,0%,98%); }
-.dashboard-container { padding: 3rem 1rem 5rem; max-width: 90rem; margin: 0 auto; }
+.user-dashboard { 
+  min-height: 100vh; 
+  background-color: hsl(0,0%,98%); 
+}
+
+.dashboard-container { 
+  padding: 3rem 1rem 5rem; 
+  max-width: 90rem; 
+  margin: 0 auto; 
+}
 
 .dashboard-header {
   margin-bottom: 2rem;
-  h1 { font-size: 1.75rem; font-weight: 700; color: #1a1a1a; margin: 0 0 0.5rem; }
-  p { color: #6b7280; font-size: 1rem; margin: 0; }
+  
+  h1 { 
+    font-size: 1.75rem; 
+    font-weight: 700; 
+    color: #1a1a1a; 
+    margin: 0 0 0.5rem; 
+  }
+  
+  p { 
+    color: #6b7280; 
+    font-size: 1rem; 
+    margin: 0; 
+  }
 }
 
 .stats-grid {
@@ -13,24 +32,85 @@
   gap: 1.5rem;
   margin-bottom: 2rem;
 
-  ::ng-deep .p-card { border-radius: .75rem; background: #fff; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,.06); border: 1px solid rgba(0,0,0,0.03); }
-  .card-icon { height: 3rem; width: 3rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; background: linear-gradient(45deg, #7c3aed, #a78bfa); margin: 0 auto 1rem; i { color: #fff; } }
+  ::ng-deep .p-card { 
+    border-radius: .75rem; 
+    background: #fff; 
+    padding: 1rem; 
+    box-shadow: 0 1px 3px rgba(0,0,0,.06); 
+    border: 1px solid rgba(0,0,0,0.03); 
+  }
+  
+  .card-icon { 
+    height: 3rem; 
+    width: 3rem; 
+    border-radius: 9999px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    background: linear-gradient(45deg, #7c3aed, #a78bfa); 
+    margin: 0 auto 1rem; 
+    
+    i { 
+      color: #fff; 
+    } 
+  }
 
-  h3 { font-size: 0.9rem; font-weight: 600; color: #374151; margin: 0 0 0.25rem; text-align: center; }
-  .card-description { font-size: 0.8rem; color: #9ca3af; margin: 0 0 0.75rem; text-align: center; }
-  .stat-value { font-size: 1.5rem; font-weight: 700; color: #6b21a8; text-align: center; text-transform: capitalize; }
-  .stat-detail { font-size: 0.8rem; color: #9ca3af; margin: 0.25rem 0 0; text-align: center; }
+  h3 { 
+    font-size: 0.9rem; 
+    font-weight: 600; 
+    color: #374151; 
+    margin: 0 0 0.25rem; 
+    text-align: center; 
+  }
+  
+  .card-description { 
+    font-size: 0.8rem; 
+    color: #9ca3af; 
+    margin: 0 0 0.75rem; 
+    text-align: center; 
+  }
+  
+  .stat-value { 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    color: #6b21a8; 
+    text-align: center; 
+    text-transform: capitalize; 
+  }
+  
+  .stat-detail { 
+    font-size: 0.8rem; 
+    color: #9ca3af; 
+    margin: 0.25rem 0 0; 
+    text-align: center; 
+  }
 }
 
-.main-grid { display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; }
+.main-grid { 
+  display: grid; 
+  grid-template-columns: 280px 1fr; 
+  gap: 1.5rem; 
+}
+
+// ========================================================================
+// FOLDERS CARD - LIMPO SEM ESTILOS DO P-TREE
+// ========================================================================
 
 .folders-card {
   min-width: 277.5px;
   min-height: 110px;
   border-radius: .75rem;
   padding: 0;
+  max-width: 280px;
+  overflow: hidden;
 
-  > ::ng-deep .p-card { border-radius: .75rem; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.06); border: 1px solid rgba(124,58,237,0.06); }
+  > ::ng-deep .p-card {
+    border-radius: .75rem;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0,0,0,.06);
+    border: 1px solid rgba(124,58,237,0.06);
+    overflow: hidden;
+  }
 
   .folders-header {
     padding: 1rem 1.25rem;
@@ -38,119 +118,166 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid rgba(0,0,0,0.04);
-    h3 { margin: 0; font-size: 1rem; font-weight: 600; color: #222; }
-    .add-folder-btn { transition: all .12s; &:hover { background: #7c3aed !important; color: #fff !important; border-radius: .375rem; } }
+    
+    h3 { 
+      margin: 0; 
+      font-size: 1rem; 
+      font-weight: 600; 
+      color: #222; 
+    }
+    
+    .add-folder-btn { 
+      transition: all .12s; 
+      
+      &:hover { 
+        background: #7c3aed !important; 
+        color: #fff !important; 
+        border-radius: .375rem; 
+      } 
+    }
   }
 
-  ::ng-deep .p-card-body { padding: 0.5rem; overflow: visible !important; }
-}
-
-.folders-card .p-tree.folders-tree {
-  --p-tree-node-hover-background: #d946ef;
-  --p-tree-node-hover-color: #fff;
-  --p-tree-node-selected-background: #7c3aed;
-  --p-tree-node-selected-color: #fff;
-  --p-tree-node-icon-color: #fff;
-  --p-tree-node-icon-hover-color: #fff;
-  --p-tree-node-icon-selected-color: #fff;
-  border: none;
-  background: transparent;
-  padding: 0;
-
-  .p-tree-node, .p-tree-node-content { overflow: visible !important; }
-
-  .p-tree-node-content {
-    display: flex !important;
-    align-items: center !important;
-    gap: .5rem !important;
-    flex-wrap: nowrap !important;
-    min-width: 0 !important;
-    padding: .6rem .5rem !important;
-    padding-right: 0.25rem !important;
-    border-radius: .5rem;
-    position: relative;
-
-    &:hover { background: #d946ef !important; color: #fff !important; }
-    &.p-highlight, &.p-tree-node-selected { background: #7c3aed !important; color: #fff !important; box-shadow: 0 2px 6px rgba(124,58,237,0.12); }
-
-    &:hover .p-tree-node-icon, &:hover .p-button-icon,
-    &.p-highlight .p-tree-node-icon, &.p-highlight .p-button-icon,
-    &.p-tree-node-selected .p-tree-node-icon, &.p-tree-node-selected .p-button-icon { color: #fff !important; fill: #fff !important; }
-  }
-
-  .p-tree-node-toggle-button, .p-tree-node-icon { flex-shrink: 0 !important; }
-  .p-tree-node-children { padding-left: 1rem; overflow: visible !important; }
-  .p-tree-container, .p-tree-root { overflow: visible !important; }
-  .p-tree-node-content { min-width: fit-content !important; }
-
-  .folder-actions {
-    display: flex;
-    gap: .35rem;
-    flex-shrink: 0;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .12s ease;
-    align-items: center;
-    z-index: 20;
-    margin-right: 0.25rem;
-  }
-
-  .folder-action-btn, .folder-action-btn.p-button {
-    width: 1.75rem !important;
-    height: 1.75rem !important;
-    min-width: 1.75rem !important;
-    padding: 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-shrink: 0 !important;
-  }
-
-  .p-button.folder-action-btn .p-button-icon, .p-button.folder-action-btn .pi { color: inherit; }
-  .folder-delete-btn:hover, .p-button.folder-delete-btn:hover { background-color: rgba(239,68,68,0.12) !important; }
-
-  li.p-tree-node .p-tree-node-content:hover .folder-actions,
-  li.p-tree-node .p-tree-node-content.p-highlight .folder-actions,
-  li.p-tree-node .p-tree-node-content.p-tree-node-selected .folder-actions,
-  .p-tree-node-children li.p-tree-node .p-tree-node-content:hover .folder-actions,
-  .p-tree-node-children li.p-tree-node .p-tree-node-content.p-highlight .folder-actions,
-  .p-tree-node-children li.p-tree-node .p-tree-node-content.p-tree-node-selected .folder-actions {
-    opacity: 1 !important;
-    pointer-events: auto !important;
+  ::ng-deep .p-card-body {
+    padding: 0.5rem;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
   }
 }
 
-.folders-card .custom-tree-node {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: .5rem !important;
-  width: 100%;
-  min-width: 0;
-  overflow: visible;
+// ========================================================================
+// GALLERY SECTION
+// ========================================================================
 
-  .folder-label { flex: 1 1 auto !important; min-width: 0 !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; padding-left: .25rem; }
+.gallery-section { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 1.5rem; 
 }
-
-.gallery-section { display: flex; flex-direction: column; gap: 1.5rem; }
 
 .upload-card, .gallery-card {
-  ::ng-deep .p-card { border-radius: .75rem; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.06); border: 1px solid rgba(124,58,237,0.03); }
-  ::ng-deep .p-card-body { padding: 1.25rem 1.5rem; }
+  ::ng-deep .p-card { 
+    border-radius: .75rem; 
+    background: #fff; 
+    box-shadow: 0 1px 6px rgba(0,0,0,.06); 
+    border: 1px solid rgba(124,58,237,0.03); 
+  }
+  
+  ::ng-deep .p-card-body { 
+    padding: 1.25rem 1.5rem; 
+  }
 }
 
 .upload-card .upload-header, .gallery-card .gallery-header {
   padding: 1.25rem 1.5rem 0.5rem;
-  h3 { display: flex; align-items: center; margin: 0 0 0.25rem; font-size: 1.1rem; font-weight: 600; color: #222; }
-  p { margin: 0; font-size: 0.9rem; color: #666; }
-  i.pi { color: #7c3aed; margin-right: 0.5rem; font-size: 1.1rem; }
+  
+  h3 { 
+    display: flex; 
+    align-items: center; 
+    margin: 0 0 0.25rem; 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    color: #222; 
+  }
+  
+  p { 
+    margin: 0; 
+    font-size: 0.9rem; 
+    color: #666; 
+  }
+  
+  i.pi { 
+    color: #7c3aed; 
+    margin-right: 0.5rem; 
+    font-size: 1.1rem; 
+  }
 }
 
-.file-path-info .p-card { border-radius: .5rem; border: 1px solid rgba(124,58,237,0.06); box-shadow: 0 1px 6px rgba(0,0,0,0.04); background: #fff; }
+.file-path-info {
+  margin-top: 1rem;
 
-.photos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-.photo-card { position: relative; aspect-ratio: 1; border-radius: .5rem; overflow: hidden; background: hsl(270,20%,96%); box-shadow: 0 1px 3px rgba(0,0,0,.03); img { width: 100%; height: 100%; object-fit: cover; display: block; } }
+  .p-card {
+    border-radius: .5rem;
+    border: 1px solid rgba(124,58,237,0.06);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    background: #fff;
+  }
+
+  .file-info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+
+    i.pi {
+      color: #7c3aed;
+      font-size: 1.1rem;
+    }
+
+    h4 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #222;
+    }
+  }
+
+  .path-details {
+    padding: 0 1.25rem 1rem;
+  }
+
+  .path-item {
+    margin-bottom: 0.75rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.25rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: #6b7280;
+      background: #f9fafb;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.375rem;
+      border: 1px solid #e5e7eb;
+      word-break: break-all;
+    }
+  }
+}
+
+// ========================================================================
+// PHOTOS GRID
+// ========================================================================
+
+.photos-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+  gap: 1rem; 
+}
+
+.photo-card { 
+  position: relative; 
+  aspect-ratio: 1; 
+  border-radius: .5rem; 
+  overflow: hidden; 
+  background: hsl(270,20%,96%); 
+  box-shadow: 0 1px 3px rgba(0,0,0,.03); 
+  
+  img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block; 
+  } 
+}
 
 .photo-overlay {
   position: absolute;
@@ -170,16 +297,36 @@
     border-radius: 50% !important;
     border: none !important;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
-    &:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-    .pi { font-size: 1rem; }
+    
+    &:hover { 
+      transform: scale(1.1); 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
+    }
+    
+    .pi { 
+      font-size: 1rem; 
+    }
   }
 
-  ::ng-deep .btn-download.p-button { background: linear-gradient(135deg, #7c3aed, #a78bfa) !important; color: #fff !important; }
-  ::ng-deep .btn-move.p-button { background: linear-gradient(135deg, #6b7280, #9ca3af) !important; color: #fff !important; }
-  ::ng-deep .btn-delete.p-button { background: linear-gradient(135deg, #dc2626, #f87171) !important; color: #fff !important; }
+  ::ng-deep .btn-download.p-button { 
+    background: linear-gradient(135deg, #7c3aed, #a78bfa) !important; 
+    color: #fff !important; 
+  }
+  
+  ::ng-deep .btn-move.p-button { 
+    background: linear-gradient(135deg, #6b7280, #9ca3af) !important; 
+    color: #fff !important; 
+  }
+  
+  ::ng-deep .btn-delete.p-button { 
+    background: linear-gradient(135deg, #dc2626, #f87171) !important; 
+    color: #fff !important; 
+  }
 }
 
-.photo-card:hover .photo-overlay { opacity: 1; }
+.photo-card:hover .photo-overlay { 
+  opacity: 1; 
+}
 
 // Estilo do menu "Mover" da galeria
 ::ng-deep .p-menu {
@@ -199,7 +346,261 @@
     }
   }
 }
-.photo-name { position: absolute; left: 0; right: 0; bottom: 0; padding: .5rem; background: rgba(0,0,0,.8); color: #fff; font-size: .75rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
-@media (max-width: 1024px) { .main-grid { grid-template-columns: 1fr; } .folders-card { max-height: none; } }
-@media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } .photos-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } }
+.photo-name { 
+  position: absolute; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  padding: .5rem; 
+  background: rgba(0,0,0,.8); 
+  color: #fff; 
+  font-size: .75rem; 
+  overflow: hidden; 
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+}
+
+// Loading state
+.loading-photos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
+  
+  p {
+    color: #64748b;
+    font-size: 1rem;
+  }
+}
+
+// Loading individual da foto
+.photo-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  gap: 0.5rem;
+  
+  i {
+    font-size: 1.5rem;
+    color: #7c3aed;
+  }
+  
+  span {
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+}
+
+// Erro ao carregar foto
+.photo-error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  gap: 0.5rem;
+  
+  i {
+    font-size: 1.5rem;
+    color: #ef4444;
+  }
+  
+  span {
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+}
+
+.no-photos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
+  color: #64748b;
+  
+  i {
+    font-size: 3rem;
+  }
+  
+  p {
+    text-align: center;
+    margin: 0;
+  }
+}
+
+// ========================================================================
+// MODAL DE EDIÇÃO
+// ========================================================================
+
+.edit-dialog-content {
+  padding: 1rem 0;
+
+  .edit-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+
+  .edit-input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    }
+  }
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.delete-dialog-content {
+  padding: 1rem 0;
+  text-align: center;
+
+  .delete-warning-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 2rem;
+      color: #dc2626;
+    }
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 1rem;
+  }
+
+  .delete-folder-name {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #7c3aed;
+    margin: 0 0 1rem;
+    padding: 0.75rem;
+    background: #f3f4f6;
+    border-radius: 0.5rem;
+    border-left: 4px solid #7c3aed;
+  }
+
+  .delete-warning-text {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+::ng-deep {
+  .p-dialog {
+    .p-dialog-header {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa);
+      color: white;
+      padding: 1.25rem 1.5rem;
+      border-radius: 0.75rem 0.75rem 0 0;
+
+      .p-dialog-title {
+        font-weight: 600;
+        font-size: 1.125rem;
+      }
+
+      .p-dialog-header-icon {
+        color: white;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    .p-dialog-content {
+      padding: 1.5rem;
+    }
+
+    .p-dialog-footer {
+      padding: 1rem 1.5rem;
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+    }
+  }
+
+  .p-button-primary {
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    border: none;
+
+    &:hover {
+      background: linear-gradient(135deg, #6d28d9, #9333ea);
+    }
+  }
+
+  .p-button-danger {
+    background: linear-gradient(135deg, #dc2626, #f87171);
+    border: none;
+    color: white;
+
+    &:hover {
+      background: linear-gradient(135deg, #b91c1c, #dc2626);
+    }
+  }
+}
+
+// ========================================================================
+// RESPONSIVE
+// ========================================================================
+
+@media (max-width: 1024px) { 
+  .main-grid { 
+    grid-template-columns: 1fr; 
+  } 
+  
+  .folders-card { 
+    max-height: none; 
+  } 
+}
+
+@media (max-width: 768px) { 
+  .stats-grid { 
+    grid-template-columns: 1fr; 
+  } 
+  
+  .photos-grid { 
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+  } 
+}

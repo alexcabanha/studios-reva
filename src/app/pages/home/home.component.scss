@@ -1,12 +1,14 @@
 .home-page { min-height: 100vh; }
 
 .hero-section {
-  padding: 4rem 0;
+  padding: 2rem 0;
   background: linear-gradient(135deg, rgba(139, 32, 211, 0.85), rgba(219, 39, 119, 0.75)), url('src/assets/hero-bg.png');
   background-size: cover;
-  background-position: center;
+  background-position: center right;
   position: relative;
   overflow: hidden;
+  opacity: 0.85;
+  
 }
 
 .hero-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; text-align: center; position: relative; z-index: 10; }
@@ -41,7 +43,7 @@
   }
 }
 
-.carousel-section { padding: 5rem 1rem; background-color: rgba(0, 0, 0, 0.03); }
+.carousel-section { padding: 3rem 1rem; background-color: rgba(0, 0, 0, 0.03); }
 
 .carousel-container {
   max-width: 1200px;
@@ -113,7 +115,9 @@
     background: white !important;
     border: none !important;
     color: #AD2BEE !important;
-    font-weight: 600 !important;
+    font-weight: 600 !important;   
+    margin-top: 2rem;
+   
     .p-button-label { color: #AD2BEE !important; }
     &:enabled:hover { background: #FBEBFA !important; }
     &:focus { box-shadow: 0 0 0 2px #AD2BEE !important; }

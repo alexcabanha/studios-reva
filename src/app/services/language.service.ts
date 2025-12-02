@@ -13,15 +13,26 @@ export type Language = 'pt-BR' | 'en-US';
   providedIn: 'root'
 })
 export class LanguageService {
-  
-  // Signal reativo para o idioma atual
-  language = signal<Language>('pt-BR');
+
+  // Signal reativo para o idioma atual (padrão: EN-US)
+  language = signal<Language>('en-US');
 
   constructor() {
-    // Carrega idioma salvo do localStorage
+    // SEMPRE inicia com EN-US (reseta localStorage se necessário)
+    // Isso garante que todos os usuários iniciem em inglês
     const saved = localStorage.getItem('language') as Language;
-    if (saved === 'en-US' || saved === 'pt-BR') {
+
+    // Se não houver idioma salvo, define EN-US como padrão
+    if (!saved) {
+      localStorage.setItem('language', 'en-US');
+      this.language.set('en-US');
+    } else if (saved === 'en-US' || saved === 'pt-BR') {
+      // Usa o idioma salvo se for válido
       this.language.set(saved);
+    } else {
+      // Se for inválido, reseta para EN-US
+      localStorage.setItem('language', 'en-US');
+      this.language.set('en-US');
     }
   }
 
@@ -65,7 +76,7 @@ export class LanguageService {
         mainHero: {
           title: 'Organize, compartilhe e encante',
           subtitle: 'Tudo em um só lugar.',
-          description: 'Uma plataforma inteligente que simplifica o dia a dia dos fotógrafos: armazenamento seguro, entrega de fotos e gestão completa de clientes.',
+          description: 'Uma plataforma inteligente para organizar, armazenar e entregar seus ensaios com segurança — tudo em um só lugar.',
           tryFree: 'Testar Gratuitamente',
           learnMore: 'Saiba Como Funciona'
         },
@@ -101,7 +112,7 @@ export class LanguageService {
         },
         finalCta: {
           title: 'Pronto para transformar seu fluxo de trabalho?',
-          description: 'Comece hoje mesmo e veja a diferença que o Reva Studio pode fazer.',
+          description: 'Comece hoje e descubra quanto tempo você pode economizar em cada ensaio.',
           button: 'Conheça Nossos Planos'
         },
         footer: {
@@ -186,24 +197,24 @@ export class LanguageService {
         description: 'O Reva Studios nasceu da paixão por fotografia e tecnologia. Nossa missão é simplificar a vida dos fotógrafos, oferecendo uma plataforma completa para armazenamento, organização e compartilhamento de fotos.',
         vision: {
           title: 'Nossa Visão',
-          description: 'Ser a plataforma preferida dos fotógrafos para gerenciamento de suas obras e clientes.'
+          description: 'Ser a principal plataforma inteligente para fotógrafos, unindo gestão, organização e criatividade em um só lugar.'
         },
         mission: {
           title: 'Nossa Missão',
-          description: 'Simplificar o dia a dia dos fotógrafos com tecnologia intuitiva e confiável.'
+          description: 'Empoderar fotógrafos com tecnologia acessível, intuitiva e confiável, tornando seus processos mais leves e eficientes.'
         },
         innovation: {
           title: 'Inovação',
-          description: 'Sempre buscando as melhores soluções tecnológicas para nossos usuários.'
+          description: 'Transformar necessidades reais em soluções tecnológicas modernas, com foco em velocidade, simplicidade e impacto na rotina dos usuários.'
         },
         quality: {
           title: 'Qualidade',
-          description: 'Compromisso com excelência em cada detalhe da plataforma.'
+          description: 'Garantir uma experiência de alto nível, com performance, segurança e acabamento impecável em cada recurso.'
         },
         cta: {
-          title: 'Feito por fotógrafos, para fotógrafos',
+          title: 'Conectando fotógrafos ao futuro',
           subtitle: 'Pronto para começar?',
-          description: 'Participe da comunidade que está moldando o futuro da fotografia digital.'
+          description: 'Venha fazer parte da comunidade que transforma a fotografia digital todos os dias.'
         }
       },
       contact: {
@@ -285,9 +296,81 @@ export class LanguageService {
         }
       },
       userDashboard: {
+        title: 'Dashboard de',
+        welcome: 'Bem-vindo! Aqui você pode gerenciar suas fotos e acompanhar o uso do seu armazenamento.',
+        currentPlan: 'Plano Atual',
+        currentPlanDesc: 'Seu plano de armazenamento',
+        spaceUsed: 'Espaço Usado',
+        spaceUsedDesc: 'Total de armazenamento utilizado',
+        totalPhotos: 'Total de Fotos',
+        totalPhotosDesc: 'Arquivos armazenados',
+        photo: 'foto',
+        photos: 'fotos',
+        stored: 'armazenadas',
+        folders: 'Pastas',
+        newFolder: 'Nova Pasta',
+        allPhotos: 'Todas as fotos',
+        createFolder: 'Criar Nova Pasta',
         createSubfolder: 'Criar Subpasta',
         editFolder: 'Editar Pasta',
-        deleteFolder: 'Excluir Pasta'
+        deleteFolder: 'Excluir Pasta',
+        folderName: 'Nome da Pasta',
+        folderNamePlaceholder: 'Digite o nome da pasta',
+        subfolderIn: 'Nome da Subpasta em',
+        cancel: 'Cancelar',
+        create: 'Criar',
+        save: 'Salvar',
+        delete: 'Excluir',
+        deleteConfirmTitle: 'Tem certeza que deseja excluir?',
+        deleteWarning: 'Todas as fotos dentro desta pasta serão movidas para a raiz. Esta ação não pode ser desfeita.',
+        uploadPhotos: 'Upload de Fotos',
+        uploadTo: 'Upload para:',
+        uploadDesc: 'Envie suas fotos para o armazenamento em nuvem',
+        selectPhotos: 'Selecionar Fotos',
+        fileInfo: 'Informações do Caminho do Arquivo',
+        localFile: 'Arquivo Local:',
+        s3Path: 'Caminho no S3:',
+        currentFolder: 'pasta atual',
+        photosInFolder: 'nesta pasta',
+        loading: 'Carregando fotos...',
+        loadingError: 'Erro ao carregar',
+        noPhotos: 'Nenhuma foto nesta pasta',
+        noPhotosYet: 'Nenhuma foto armazenada ainda. Faça upload de suas primeiras fotos!',
+        download: 'Baixar',
+        moveToFolder: 'Mover para pasta',
+        root: 'Raiz (Todas as fotos)',
+        unlimited: 'Ilimitado',
+        used: 'utilizado',
+        messages: {
+          folderCreated: 'Pasta criada',
+          folderCreatedSuccess: 'Pasta "{name}" criada com sucesso',
+          subfolderCreatedIn: 'Subpasta "{name}" criada em "{parent}"',
+          folderRenamed: 'Pasta renomeada',
+          folderRenamedTo: 'Pasta renomeada para "{name}"',
+          folderDeleted: 'Pasta excluída',
+          folderDeletedSuccess: 'Pasta "{name}" excluída com sucesso',
+          photoMoved: 'Foto movida',
+          photoMovedSuccess: 'Foto movida com sucesso',
+          uploadSuccess: 'Upload realizado!',
+          uploadSuccessDesc: '{name} foi enviada com sucesso',
+          downloadStarted: 'Download iniciado',
+          downloadStartedDesc: 'Baixando {name}',
+          photoDeleted: 'Foto excluída',
+          photoDeletedFromS3: 'A foto foi removida do S3 e do seu armazenamento',
+          photoDeletedLocal: 'A foto foi removida do seu armazenamento',
+          photoDeletedWarning: 'A foto foi removida localmente, mas pode ainda estar no S3',
+          error: 'Erro',
+          folderNameEmpty: 'Nome da pasta não pode estar vazio',
+          storageLimitExceeded: 'Limite excedido',
+          storageLimitExceededDesc: 'Você atingiu o limite de armazenamento do seu plano',
+          uploadError: 'Erro no upload',
+          uploadErrorDesc: 'Falha ao enviar {name}',
+          s3KeyNotFound: 'Chave S3 não encontrada',
+          downloadError: 'Falha ao gerar link de download',
+          loadImageError: 'Falha ao carregar algumas imagens',
+          deletePhotoConfirm: 'Tem certeza que deseja excluir esta foto?',
+          warning: 'Aviso'
+        }
       },
       emConstrucao: {
         title: 'Funcionalidade em Construção',
@@ -335,7 +418,7 @@ export class LanguageService {
         mainHero: {
           title: 'Organize, share and delight',
           subtitle: 'Everything in one place.',
-          description: 'An intelligent platform that simplifies photographers\' daily work: secure storage, photo delivery and complete client management.',
+          description: 'An intelligent platform to securely organize, store, and deliver your essays — all in one place.',
           tryFree: 'Try it Free',
           learnMore: 'Learn How it Works'
         },
@@ -371,7 +454,7 @@ export class LanguageService {
         },
         finalCta: {
           title: 'Ready to transform your workflow?',
-          description: 'Start today and see the difference Reva Studio can make.',
+          description: 'Start today and discover how much time you can save on each rehearsal.',
           button: 'Explore Our Plans'
         },
         footer: {
@@ -456,24 +539,24 @@ export class LanguageService {
         description: 'Reva Studios was born from a passion for photography and technology. Our mission is to simplify photographers\' lives by offering a complete platform for photo storage, organization and sharing.',
         vision: {
           title: 'Our Vision',
-          description: 'To be the preferred platform for photographers to manage their work and clients.'
+          description: 'To be the leading intelligent platform for photographers, uniting management, organization, and creativity in one place.'
         },
         mission: {
           title: 'Our Mission',
-          description: 'Simplify photographers\' daily lives with intuitive and reliable technology.'
+          description: 'To empower photographers with accessible, intuitive, and reliable technology, making their processes lighter and more efficient.'
         },
         innovation: {
           title: 'Innovation',
-          description: 'Always seeking the best technological solutions for our users.'
+          description: 'To transform real needs into modern technological solutions, focusing on speed, simplicity, and impact on users routines.'
         },
         quality: {
           title: 'Quality',
-          description: 'Commitment to excellence in every detail of the platform.'
+          description: 'To guarantee a high-level experience, with performance, security, and impeccable finish in every feature.'
         },
         cta: {
-          title: 'Made by photographers, for photographers',
+          title: 'Connecting photographers to the future.',
           subtitle: 'Ready to get started?',
-          description: 'Join the community that is shaping the future of digital photography.'
+          description: 'Come and be part of the community that transforms digital photography every day.'
         }
       },
       contact: {
@@ -555,9 +638,81 @@ export class LanguageService {
         }
       },
       userDashboard: {
+        title: 'Dashboard of',
+        welcome: 'Welcome! Here you can manage your photos and track your storage usage.',
+        currentPlan: 'Current Plan',
+        currentPlanDesc: 'Your storage plan',
+        spaceUsed: 'Space Used',
+        spaceUsedDesc: 'Total storage used',
+        totalPhotos: 'Total Photos',
+        totalPhotosDesc: 'Stored files',
+        photo: 'photo',
+        photos: 'photos',
+        stored: 'stored',
+        folders: 'Folders',
+        newFolder: 'New Folder',
+        allPhotos: 'All photos',
+        createFolder: 'Create New Folder',
         createSubfolder: 'Create Subfolder',
         editFolder: 'Edit Folder',
-        deleteFolder: 'Delete Folder'
+        deleteFolder: 'Delete Folder',
+        folderName: 'Folder Name',
+        folderNamePlaceholder: 'Enter folder name',
+        subfolderIn: 'Subfolder Name in',
+        cancel: 'Cancel',
+        create: 'Create',
+        save: 'Save',
+        delete: 'Delete',
+        deleteConfirmTitle: 'Are you sure you want to delete?',
+        deleteWarning: 'All photos inside this folder will be moved to root. This action cannot be undone.',
+        uploadPhotos: 'Upload Photos',
+        uploadTo: 'Upload to:',
+        uploadDesc: 'Send your photos to cloud storage',
+        selectPhotos: 'Select Photos',
+        fileInfo: 'File Path Information',
+        localFile: 'Local File:',
+        s3Path: 'S3 Path:',
+        currentFolder: 'current folder',
+        photosInFolder: 'in this folder',
+        loading: 'Loading photos...',
+        loadingError: 'Error loading',
+        noPhotos: 'No photos in this folder',
+        noPhotosYet: 'No photos stored yet. Upload your first photos!',
+        download: 'Download',
+        moveToFolder: 'Move to folder',
+        root: 'Root (All photos)',
+        unlimited: 'Unlimited',
+        used: 'used',
+        messages: {
+          folderCreated: 'Folder created',
+          folderCreatedSuccess: 'Folder "{name}" created successfully',
+          subfolderCreatedIn: 'Subfolder "{name}" created in "{parent}"',
+          folderRenamed: 'Folder renamed',
+          folderRenamedTo: 'Folder renamed to "{name}"',
+          folderDeleted: 'Folder deleted',
+          folderDeletedSuccess: 'Folder "{name}" deleted successfully',
+          photoMoved: 'Photo moved',
+          photoMovedSuccess: 'Photo moved successfully',
+          uploadSuccess: 'Upload completed!',
+          uploadSuccessDesc: '{name} was uploaded successfully',
+          downloadStarted: 'Download started',
+          downloadStartedDesc: 'Downloading {name}',
+          photoDeleted: 'Photo deleted',
+          photoDeletedFromS3: 'The photo was removed from S3 and your storage',
+          photoDeletedLocal: 'The photo was removed from your storage',
+          photoDeletedWarning: 'The photo was removed locally, but may still be on S3',
+          error: 'Error',
+          folderNameEmpty: 'Folder name cannot be empty',
+          storageLimitExceeded: 'Limit exceeded',
+          storageLimitExceededDesc: 'You have reached your plan storage limit',
+          uploadError: 'Upload error',
+          uploadErrorDesc: 'Failed to upload {name}',
+          s3KeyNotFound: 'S3 key not found',
+          downloadError: 'Failed to generate download link',
+          loadImageError: 'Failed to load some images',
+          deletePhotoConfirm: 'Are you sure you want to delete this photo?',
+          warning: 'Warning'
+        }
       },
       emConstrucao: {
         title: 'Feature Under Construction',

@@ -286,6 +286,9 @@ export class StorageService {
 
   /**
    * Faz upload de uma foto
+   * @deprecated Este método salva arquivos em base64 no localStorage.
+   * Use UploadService.uploadFile() para enviar arquivos para o S3 da AWS.
+   * Este método permanece apenas para compatibilidade com código legado.
    */
   async uploadPhoto(userId: string, file: File, folderId: string | null = null): Promise<Photo> {
     const users = this.getUsers();
@@ -299,7 +302,7 @@ export class StorageService {
 
     // Converte arquivo para base64
     const dataUrl = await this.fileToBase64(file);
-    
+
     const photo: Photo = {
       id: this.generateId(),
       userId,

@@ -2,11 +2,136 @@
   <app-navbar></app-navbar>
   <p-toast></p-toast>
 
+  <!-- Modal de Criar Pasta -->
+  <p-dialog
+    [(visible)]="showCreateDialog"
+    [header]="parentFolderForCreate() ? languageService.t('userDashboard.createSubfolder') : languageService.t('userDashboard.createFolder')"
+    [modal]="true"
+    [style]="{width: '450px'}"
+    [draggable]="false"
+    [resizable]="false"
+    (onHide)="closeCreateDialog()">
+
+    <div class="edit-dialog-content">
+      <label for="createFolderName" class="edit-label">
+        {{ parentFolderForCreate() ? languageService.t('userDashboard.subfolderIn') + ' "' + parentFolderForCreate()!.name + '"' : languageService.t('userDashboard.folderName') }}
+      </label>
+      <input
+        id="createFolderName"
+        type="text"
+        pInputText
+        [(ngModel)]="createFolderName"
+        (keyup.enter)="saveCreateFolder()"
+        (keyup.escape)="closeCreateDialog()"
+        class="edit-input"
+        [placeholder]="languageService.t('userDashboard.folderNamePlaceholder')"
+        autofocus />
+    </div>
+
+    <ng-template pTemplate="footer">
+      <div class="dialog-footer">
+        <p-button
+          [label]="languageService.t('userDashboard.cancel')"
+          icon="pi pi-times"
+          (onClick)="closeCreateDialog()"
+          styleClass="p-button-text p-button-secondary">
+        </p-button>
+        <p-button
+          [label]="languageService.t('userDashboard.create')"
+          icon="pi pi-plus"
+          (onClick)="saveCreateFolder()"
+          styleClass="p-button-primary">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <!-- Modal de Edição de Pasta -->
+  <p-dialog
+    [(visible)]="showEditDialog"
+    [header]="languageService.t('userDashboard.editFolder')"
+    [modal]="true"
+    [style]="{width: '450px'}"
+    [draggable]="false"
+    [resizable]="false"
+    (onHide)="closeEditDialog()">
+
+    <div class="edit-dialog-content">
+      <label for="folderName" class="edit-label">{{ languageService.t('userDashboard.folderName') }}</label>
+      <input
+        id="folderName"
+        type="text"
+        pInputText
+        [(ngModel)]="newFolderName"
+        (keyup.enter)="saveEditFolder()"
+        (keyup.escape)="closeEditDialog()"
+        class="edit-input"
+        [placeholder]="languageService.t('userDashboard.folderNamePlaceholder')"
+        autofocus />
+    </div>
+
+    <ng-template pTemplate="footer">
+      <div class="dialog-footer">
+        <p-button
+          [label]="languageService.t('userDashboard.cancel')"
+          icon="pi pi-times"
+          (onClick)="closeEditDialog()"
+          styleClass="p-button-text p-button-secondary">
+        </p-button>
+        <p-button
+          [label]="languageService.t('userDashboard.save')"
+          icon="pi pi-check"
+          (onClick)="saveEditFolder()"
+          styleClass="p-button-primary">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <!-- Modal de Deletar Pasta -->
+  <p-dialog
+    [(visible)]="showDeleteDialog"
+    [header]="languageService.t('userDashboard.deleteFolder')"
+    [modal]="true"
+    [style]="{width: '450px'}"
+    [draggable]="false"
+    [resizable]="false"
+    (onHide)="closeDeleteDialog()">
+
+    <div class="delete-dialog-content">
+      <div class="delete-warning-icon">
+        <i class="pi pi-exclamation-triangle"></i>
+      </div>
+      <h3>{{ languageService.t('userDashboard.deleteConfirmTitle') }}</h3>
+      <p class="delete-folder-name">{{ folderToDelete()?.name }}</p>
+      <p class="delete-warning-text">
+        {{ languageService.t('userDashboard.deleteWarning') }}
+      </p>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <div class="dialog-footer">
+        <p-button
+          [label]="languageService.t('userDashboard.cancel')"
+          icon="pi pi-times"
+          (onClick)="closeDeleteDialog()"
+          styleClass="p-button-text p-button-secondary">
+        </p-button>
+        <p-button
+          [label]="languageService.t('userDashboard.delete')"
+          icon="pi pi-trash"
+          (onClick)="confirmDeleteFolder()"
+          styleClass="p-button-danger">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+
   <div class="dashboard-container">
     <!-- Header -->
     <div class="dashboard-header">
-      <h1>Dashboard de {{ currentUser()?.name }}</h1>
-      <p>Bem-vindo! Aqui você pode gerenciar suas fotos e acompanhar o uso do seu armazenamento.</p>
+      <h1>{{ languageService.t('userDashboard.title') }} {{ currentUser()?.name }}</h1>
+      <p>{{ languageService.t('userDashboard.welcome') }}</p>
     </div>
 
     <!-- Cards de estatísticas -->
@@ -17,8 +142,8 @@
             <i class="pi pi-briefcase"></i>
           </div>
         </ng-template>
-        <h3>Plano Atual</h3>
-        <p class="card-description">Seu plano de armazenamento</p>
+        <h3>{{ languageService.t('userDashboard.currentPlan') }}</h3>
+        <p class="card-description">{{ languageService.t('userDashboard.currentPlanDesc') }}</p>
         <div class="stat-value capitalize">{{ currentUser()?.plan }}</div>
         <p class="stat-detail">{{ getStorageLimitFormatted() }}</p>
       </p-card>
@@ -29,14 +154,14 @@
             <i class="pi pi-database"></i>
           </div>
         </ng-template>
-        <h3>Espaço Usado</h3>
-        <p class="card-description">Total de armazenamento utilizado</p>
+        <h3>{{ languageService.t('userDashboard.spaceUsed') }}</h3>
+        <p class="card-description">{{ languageService.t('userDashboard.spaceUsedDesc') }}</p>
         <div class="stat-value">{{ formatBytes(currentUser()?.storageUsed || 0) }}</div>
         <p-progressBar *ngIf="currentUser()?.plan !== 'studio'" [value]="getStoragePercentage()" [showValue]="false"
           styleClass="storage-bar">
         </p-progressBar>
         <p class="stat-detail" *ngIf="currentUser()?.plan !== 'studio'">
-          {{ getStoragePercentage().toFixed(1) }}% utilizado
+          {{ getStoragePercentage().toFixed(1) }}% {{ languageService.t('userDashboard.used') }}
         </p>
       </p-card>
 
@@ -46,11 +171,11 @@
             <i class="pi pi-images"></i>
           </div>
         </ng-template>
-        <h3>Total de Fotos</h3>
-        <p class="card-description">Arquivos armazenados</p>
+        <h3>{{ languageService.t('userDashboard.totalPhotos') }}</h3>
+        <p class="card-description">{{ languageService.t('userDashboard.totalPhotosDesc') }}</p>
         <div class="stat-value">{{ getTotalPhotos() }}</div>
         <p class="stat-detail">
-          {{ getTotalPhotos() === 1 ? 'foto' : 'fotos' }} armazenadas
+          {{ getTotalPhotos() === 1 ? languageService.t('userDashboard.photo') : languageService.t('userDashboard.photos') }} {{ languageService.t('userDashboard.stored') }}
         </p>
       </p-card>
     </div>
@@ -61,37 +186,21 @@
       <p-card class="folders-card">
         <ng-template pTemplate="header">
           <div class="folders-header">
-            <h3>Pastas</h3>
+            <h3>{{ languageService.t('userDashboard.folders') }}</h3>
             <p-button icon="pi pi-plus" [rounded]="true" [text]="true" size="small" (onClick)="createFolder()"
-              pTooltip="Nova Pasta" styleClass="add-folder-btn">
+              [pTooltip]="languageService.t('userDashboard.newFolder')" styleClass="add-folder-btn">
             </p-button>
           </div>
         </ng-template>
 
-        <p-tree [value]="folderNodes" selectionMode="single" (onNodeSelect)="onFolderSelect($event)"
-          styleClass="w-full border-none folders-tree" class="folders-tree">
-          <ng-template let-node pTemplate="default">
-            <div class="custom-tree-node">
-              <span class="folder-label">{{ node.label }}</span>
-              <div class="folder-actions" *ngIf="node.data !== null" (click)="$event.stopPropagation()">
-                <p-button icon="pi pi-folder-plus" [rounded]="true" [text]="true" size="small"
-                  (onClick)="createSubfolder(node.data, $event)"
-                  [pTooltip]="languageService.t('userDashboard.createSubfolder')" tooltipPosition="top"
-                  styleClass="folder-action-btn">
-                </p-button>
-                <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" size="small"
-                  (onClick)="editFolder(node.data, $event)" [pTooltip]="languageService.t('userDashboard.editFolder')"
-                  tooltipPosition="top" styleClass="folder-action-btn">
-                </p-button>
-                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" size="small"
-                  (onClick)="deleteFolder(node.data, $event)"
-                  [pTooltip]="languageService.t('userDashboard.deleteFolder')" tooltipPosition="top"
-                  styleClass="folder-action-btn folder-delete-btn">
-                </p-button>
-              </div>
-            </div>
-          </ng-template>
-        </p-tree>
+        <!-- CUSTOM TREE COMPONENT -->
+        <app-custom-tree
+          [nodes]="getRootTreeNodes()"
+          (nodeSelect)="onFolderSelect($event)"
+          (createSubfolder)="createSubfolder($event)"
+          (editFolder)="editFolder($event)"
+          (deleteFolder)="deleteFolder($event)">
+        </app-custom-tree>
       </p-card>
 
       <!-- Área principal -->
@@ -104,9 +213,9 @@
                 <div>
                   <h3>
                     <i class="pi pi-upload" style="color:#7c3aed; margin-right:.4rem;"></i>
-                    Upload de Fotos
+                    {{ languageService.t('userDashboard.uploadPhotos') }}
                   </h3>
-                  <p>{{ selectedFolderId() ? 'Upload para: ' + getCurrentFolderName() : 'Envie suas fotos para o armazenamento em nuvem' }}</p>
+                  <p>{{ selectedFolderId() ? languageService.t('userDashboard.uploadTo') + ' ' + getCurrentFolderName() : languageService.t('userDashboard.uploadDesc') }}</p>
                 </div>
               </div>
             </ng-template>
@@ -114,7 +223,7 @@
             <input #fileInput type="file" accept="image/*" multiple (change)="onFileSelect($event)"
               style="display: none">
 
-            <p-button label="Selecionar Fotos" icon="pi pi-upload" [loading]="isUploading()"
+            <p-button [label]="languageService.t('userDashboard.selectPhotos')" icon="pi pi-upload" [loading]="isUploading()"
               (onClick)="openFileSelector()">
             </p-button>
 
@@ -124,18 +233,18 @@
                 <ng-template pTemplate="header">
                   <div class="file-info-header">
                     <i class="pi pi-folder-open"></i>
-                    <h4>Informações do Caminho do Arquivo</h4>
+                    <h4>{{ languageService.t('userDashboard.fileInfo') }}</h4>
                   </div>
                 </ng-template>
 
                 <div class="path-details">
                   <div class="path-item">
-                    <label>Arquivo Local:</label>
+                    <label>{{ languageService.t('userDashboard.localFile') }}</label>
                     <p>{{ selectedFile()!.path }}</p>
                   </div>
                   <div class="path-item">
-                    <label>Caminho no Armazenamento em Nuvem:</label>
-                    <p>/storage/users/{{ currentUser()?.id }}/photos/{{ selectedFile()!.name }}</p>
+                    <label>{{ languageService.t('userDashboard.s3Path') }}</label>
+                    <p>s3://reva-studios-uploads/{{ selectedFile()!.name }}</p>
                   </div>
                 </div>
               </p-card>
@@ -152,33 +261,59 @@
                   <i class="pi pi-folder-open"></i>
                   {{ getCurrentFolderName() }}
                 </h3>
-                <p>{{ photos().length }} {{ photos().length === 1 ? 'foto' : 'fotos' }} nesta pasta</p>
+                <p>{{ photos().length }} {{ photos().length === 1 ? languageService.t('userDashboard.photo') : languageService.t('userDashboard.photos') }} {{ languageService.t('userDashboard.photosInFolder') }}</p>
               </div>
             </ng-template>
 
+            <!-- Loading state -->
+            <div *ngIf="isLoadingPhotos()" class="loading-photos">
+              <i class="pi pi-spin pi-spinner" style="font-size: 2rem; color: #7c3aed;"></i>
+              <p>{{ languageService.t('userDashboard.loading') }}</p>
+            </div>
+
             <!-- Grid de fotos -->
-            <div *ngIf="photos().length > 0; else noPhotos" class="photos-grid">
+            <div *ngIf="!isLoadingPhotos() && photos().length > 0; else noPhotos" class="photos-grid">
               <div *ngFor="let photo of photos()" class="photo-card">
-                <img [src]="photo.dataUrl" [alt]="photo.name">
-                <div class="photo-overlay">
+                <!-- Loading individual da imagem -->
+                <div *ngIf="photo.isLoadingUrl" class="photo-loading">
+                  <i class="pi pi-spin pi-spinner"></i>
+                  <span>{{ languageService.t('userDashboard.loading') }}</span>
+                </div>
+
+                <!-- Imagem ou placeholder -->
+                <img
+                  *ngIf="!photo.isLoadingUrl && photo.displayUrl"
+                  [src]="photo.displayUrl"
+                  [alt]="photo.name"
+                  (error)="onImageError($event, photo)">
+
+                <!-- Erro ao carregar imagem -->
+                <div *ngIf="!photo.isLoadingUrl && !photo.displayUrl" class="photo-error">
+                  <i class="pi pi-exclamation-triangle"></i>
+                  <span>{{ languageService.t('userDashboard.loadingError') }}</span>
+                </div>
+
+                <!-- Overlay com ações (só aparece se a imagem estiver carregada) -->
+                <div *ngIf="!photo.isLoadingUrl && photo.displayUrl" class="photo-overlay">
                   <!-- Download -->
                   <p-button icon="pi pi-download" [rounded]="true" size="small"
                     (onClick)="downloadPhoto(photo)" styleClass="btn-download"
-                    pTooltip="Baixar" tooltipPosition="top">
+                    [pTooltip]="languageService.t('userDashboard.download')" tooltipPosition="top">
                   </p-button>
                   <!-- Mover -->
                   <p-button icon="pi pi-arrows-alt" [rounded]="true" size="small"
                     (onClick)="moveMenu.toggle($event)" styleClass="btn-move"
-                    pTooltip="Mover para pasta" tooltipPosition="top">
+                    [pTooltip]="languageService.t('userDashboard.moveToFolder')" tooltipPosition="top">
                   </p-button>
                   <p-menu #moveMenu [model]="getMoveMenuItems(photo)" [popup]="true" appendTo="body">
                   </p-menu>
                   <!-- Deletar -->
                   <p-button icon="pi pi-trash" [rounded]="true" size="small"
                     (onClick)="deletePhoto(photo)" styleClass="btn-delete"
-                    pTooltip="Excluir" tooltipPosition="top">
+                    [pTooltip]="languageService.t('userDashboard.delete')" tooltipPosition="top">
                   </p-button>
                 </div>
+
                 <div class="photo-name">{{ photo.name }}</div>
               </div>
             </div>
@@ -188,8 +323,8 @@
                 <i class="pi pi-images"></i>
                 <p>
                   {{ selectedFolderId()
-                  ? 'Nenhuma foto nesta pasta'
-                  : 'Nenhuma foto armazenada ainda. Faça upload de suas primeiras fotos!' }}
+                  ? languageService.t('userDashboard.noPhotos')
+                  : languageService.t('userDashboard.noPhotosYet') }}
                 </p>
               </div>
             </ng-template>

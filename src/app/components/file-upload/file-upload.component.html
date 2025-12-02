@@ -1,0 +1,62 @@
+<div class="file-upload-container">
+
+  <!-- Seleção de arquivo -->
+  <input
+    id="fileInput"
+    type="file"
+    (change)="onFileSelected($event)"
+    class="file-input"
+  />
+
+  <button
+    (click)="uploadFile()"
+    [disabled]="!selectedFile || uploading"
+    class="upload-button"
+  >
+    Enviar Arquivo
+  </button>
+
+  <!-- Erro -->
+  <p *ngIf="error" class="error-text">{{ error }}</p>
+
+  <!-- Progresso -->
+  <div *ngIf="uploading" class="progress-container">
+    <div class="progress-bar" [style.width.%]="uploadProgress"></div>
+  </div>
+
+  <!-- Lista de arquivos -->
+  <div class="files-list" *ngIf="uploadedFiles.length > 0">
+
+    <div class="file-item" *ngFor="let file of uploadedFiles; let i = index">
+
+      <!-- IMAGEM -->
+      <img
+        *ngIf="isImage(file.fileUrl)"
+        [src]="file.fileUrl"
+        alt="Preview"
+        class="preview-image"
+      />
+
+      <!-- Ícone de arquivo não-imagem -->
+      <div *ngIf="!isImage(file.fileUrl)" class="file-icon">
+        📄
+      </div>
+
+      <!-- Nome / link -->
+      <a
+        class="file-name"
+        [href]="file.fileUrl"
+        target="_blank"
+      >
+        {{ file.fileKey || 'arquivo' }}
+      </a>
+
+      <!-- Remover -->
+      <button (click)="removeFile(i)" class="remove-button">
+        Remover
+      </button>
+
+    </div>
+  </div>
+
+</div>
